@@ -1,5 +1,5 @@
 (function () {
-  var Index = React.createClass({
+  var BenchIndex = React.createClass({
     getInitialState: function() {
       return { benches: BenchStore.all() };
     },
