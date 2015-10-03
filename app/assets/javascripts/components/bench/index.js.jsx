@@ -6,6 +6,7 @@
 
     componentDidMount: function() {
       BenchStore.addChangeListener(this._onChange);
+      ApiUtil.fetchBenches();
     },
 
     componentWillUnmount: function() {
