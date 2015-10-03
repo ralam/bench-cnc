@@ -1,14 +1,15 @@
 ApiUtil = {
   fetchBenches: function() {
-    $.ajax(
+    $.ajax({
+      type: 'GET',
       url: '/benches',
       dataType: 'json',
       success: function(benches){
-        ApiActions.recieveAll(Benches);
+        ApiActions.recieveAll(benches);
       },
       error: function () {
         debugger;
       }
-    )
+    });
   }
 }
