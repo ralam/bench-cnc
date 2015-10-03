@@ -12,4 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require flux
+//= require eventemitter
 //= require_tree .
