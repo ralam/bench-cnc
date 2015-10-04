@@ -9,6 +9,10 @@
 <body>
 
 <%= yield %>
+<%= @maps %>
 
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxjVjhow6ggAF7UN6C1L1dA0M7wtm30lY&callback=initMap">
+  </script>
 </body>
 </html>
