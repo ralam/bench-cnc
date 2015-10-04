@@ -25,22 +25,33 @@ var Map = React.createClass({
 
   updateMarkers: function() {
     if (this.markers) {
-      this.markers = [];
+      this.resetMarkers();
     }
     this.placeMarkers();
   },
 
+  resetMarkers: function() {
+    this.markers.forEach(function(marker) {
+      marker.setMap(null);
+    });
+    this.markers = [];
+  },
+
+  _checkBounds: function(bench) {
+    var lats = []
+    var lngs = []
+    var bounds = this.map.getBounds();
+    if (bounds) {
+      lats = [bounds.Ka.H, bounds.Ka.j];
+      lngs = [bounds.Ga.H, bounds.Ga.j];
+    }
+
+    return (Math.abs(bench.lat) >= Math.abs(lats[0]) && Math.abs(bench.lat) <= Math.abs(lats[1]) && Math.abs(bench.lng) >= Math.abs(lngs[0]) && Math.abs(bench.lng) <= Math.abs(lngs[1]))
+  },
+
   placeMarkers: function() {
     this.state.benches.forEach(function(bench) {
-      var lats = []
-      var lngs = []
-      var bounds = this.map.getBounds();
-      if (bounds) {
-        lats = [bounds.Ka.H, bounds.Ka.j];
-        lngs = [bounds.Ga.H, bounds.Ga.j];
-      }
-
-      if (Math.abs(bench.lat) >= Math.abs(lats[0]) && Math.abs(bench.lat) <= Math.abs(lats[1]) && Math.abs(bench.lng) >= Math.abs(lngs[0]) && Math.abs(bench.lng) <= Math.abs(lngs[1])) {
+      if (this._checkBounds(bench)) {
         var benchLatLng = new google.maps.LatLng(bench.lat, bench.lng)
         var marker = new google.maps.Marker({
           position: benchLatLng
