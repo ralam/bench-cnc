@@ -14,21 +14,42 @@ var Map = React.createClass({
       zoom: 13
     };
     this.map = new google.maps.Map(map, mapOptions);
+
+    this.map.addListener('idle', this.updateMarkers);
   },
 
   _onChange: function() {
     this.setState({benches: BenchStore.all()});
   },
 
+
+  updateMarkers: function() {
+    if (this.markers) {
+      this.markers = [];
+    }
+    this.placeMarkers();
+  },
+
   placeMarkers: function() {
     this.state.benches.forEach(function(bench) {
-      var benchLatLng = new google.maps.LatLng(bench.lat, bench.lng)
-      var marker = new google.maps.Marker({
-        position: benchLatLng
-      });
-      this.markers.push(marker)
-      marker.setMap(this.map)
+      var lats = []
+      var lngs = []
+      var bounds = this.map.getBounds();
+      if (bounds) {
+        lats = [bounds.Ka.H, bounds.Ka.j];
+        lngs = [bounds.Ga.H, bounds.Ga.j];
+      }
+
+      if (Math.abs(bench.lat) >= Math.abs(lats[0]) && Math.abs(bench.lat) <= Math.abs(lats[1]) && Math.abs(bench.lng) >= Math.abs(lngs[0]) && Math.abs(bench.lng) <= Math.abs(lngs[1])) {
+        var benchLatLng = new google.maps.LatLng(bench.lat, bench.lng)
+        var marker = new google.maps.Marker({
+          position: benchLatLng
+        });
+        this.markers.push(marker)
+        marker.setMap(this.map)
+      }
     }.bind(this));
+    console.log(this.markers);
   },
 
   render: function () {
