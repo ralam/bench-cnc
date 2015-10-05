@@ -12,5 +12,19 @@ ApiUtil = {
         console.log(jqXHR);
       }
     });
+  },
+  createBench: function(params) {
+    $.ajax({
+      type: "POST",
+      url: '/benches',
+      data: {params: params}
+      dataType: 'json',
+      success: function(bench){
+        console.log(bench)
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.error(jqXHR);
+      }
+    });
   }
 }

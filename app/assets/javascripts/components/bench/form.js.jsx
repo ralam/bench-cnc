@@ -21,6 +21,7 @@ var BenchForm = React.createClass({
           Number of spaces
           <input type="text" name="bench[spaces]"></input>
         </label>
+        <br></br>
         <input type="submit" value="Submit"></input>
       </form>
     )
