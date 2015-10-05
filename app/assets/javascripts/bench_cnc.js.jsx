@@ -19,5 +19,5 @@ $(function (){
       <IndexRoute component={Search}/>
     </Route>
   );
-  React.render(<Search/>, content)
+  React.render(<Router>{routes}</Router>, root);
 });
