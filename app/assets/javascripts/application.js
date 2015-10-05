@@ -15,4 +15,5 @@
 //= require react
 //= require flux
 //= require eventemitter
+//= require_tree ../../../vendor/assets/javascripts
 //= require_tree .
