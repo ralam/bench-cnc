@@ -6,7 +6,7 @@
     BenchStore.emit(CHANGE_EVENT);
   };
   root.BenchStore = $.extend({}, EventEmitter.prototype, {
-    all: function () {
+    all: function() {
       return _benches.slice(0);
     },
 

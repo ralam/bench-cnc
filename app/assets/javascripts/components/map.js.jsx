@@ -22,11 +22,22 @@ var Map = React.createClass({
     this.setState({benches: BenchStore.all()});
   },
 
-
   updateMarkers: function() {
     if (this.markers) {
       this.resetMarkers();
     }
+    var bounds = this.map.getBounds();
+    var northEast = bounds.getNorthEast();
+    var northEastLat = northEast.lat();
+    var northEastLng = northEast.lng();
+    var southWest = bounds.getSouthWest();
+    var southWestLat = southWest.lat();
+    var southWestLng = southWest.lng();
+    var computedBounds = {
+      northEast: {lat: northEastLat, lng: northEastLng},
+      southWest: {lat: southWestLat, lng: southWestLng}
+    };
+    console.log(computedBounds);
     this.placeMarkers();
   },
 
@@ -60,7 +71,6 @@ var Map = React.createClass({
         marker.setMap(this.map)
       }
     }.bind(this));
-    console.log(this.markers);
   },
 
   render: function () {
