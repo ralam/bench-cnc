@@ -6,7 +6,6 @@ var Map = React.createClass({
   componentDidMount: function() {
     this.markers = []
 
-
     BenchStore.addChangeListener(this._onChange);
 
     var map = React.findDOMNode(this.refs.map);
@@ -15,17 +14,24 @@ var Map = React.createClass({
       zoom: 13
     };
     this.map = new google.maps.Map(map, mapOptions);
+    // this.updateMarkers();
+
     this.map.addListener('idle', this._onIdle);
+    // this.map.addListener('idle', this.updateMarkers);
   },
 
   _onChange: function() {
     this.setState({benches: BenchStore.all()});
   },
 
+  _onIdle: function() {
+    var bounds = this.getBounds();
+    ApiUtil.fetchBenches(bounds);
+  },
+
   updateMarkers: function() {
-    if (this.markers) {
-      this.resetMarkers();
-    }
+    this.resetMarkers();
+    this.placeMarkers();
   },
 
   getBounds: function () {
@@ -37,20 +43,17 @@ var Map = React.createClass({
     return bounds
   },
 
-  _onIdle: function() {
-    this.updateMarkers();
-    var bounds = this.getBounds();
-    ApiUtil.fetchBenches(bounds);
-  },
-
   resetMarkers: function() {
-    this.markers.forEach(function(marker) {
-      marker.setMap(null);
-    });
-    this.markers = [];
+    if (this.markers) {
+      this.markers.forEach(function(marker) {
+        marker.setMap(null);
+      });
+      this.markers = [];
+    }
   },
 
   placeMarkers: function() {
+    this.resetMarkers();
     this.state.benches.forEach(function(bench) {
       var benchLatLng = new google.maps.LatLng(bench.lat, bench.lng);
       var marker = new google.maps.Marker({position: benchLatLng});
@@ -60,7 +63,8 @@ var Map = React.createClass({
   },
 
   render: function () {
-    this.placeMarkers();
+    this.updateMarkers();
+    console.error("update")
 
     return (
       <div className="map" ref="map"></div>
