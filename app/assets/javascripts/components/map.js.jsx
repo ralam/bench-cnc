@@ -14,10 +14,8 @@ var Map = React.createClass({
       zoom: 13
     };
     this.map = new google.maps.Map(map, mapOptions);
-    // this.updateMarkers();
 
     this.map.addListener('idle', this._onIdle);
-    // this.map.addListener('idle', this.updateMarkers);
   },
 
   _onChange: function() {
@@ -64,7 +62,6 @@ var Map = React.createClass({
 
   render: function () {
     this.updateMarkers();
-    console.error("update")
 
     return (
       <div className="map" ref="map"></div>

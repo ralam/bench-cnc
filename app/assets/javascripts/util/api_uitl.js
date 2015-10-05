@@ -6,7 +6,6 @@ ApiUtil = {
       data: {bounds: bounds},
       dataType: 'json',
       success: function(benches){
-        console.log('AJAXed!')
         ApiActions.recieveAll(benches);
       },
       error: function (jqXHR, textStatus, errorThrown) {
