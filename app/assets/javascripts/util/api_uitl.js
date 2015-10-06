@@ -13,11 +13,12 @@ ApiUtil = {
       }
     });
   },
+
   createBench: function(params) {
     $.ajax({
       type: "POST",
       url: '/benches',
-      data: {params: params}
+      data: {params: params},
       dataType: 'json',
       success: function(bench){
         console.log(bench)
@@ -27,4 +28,4 @@ ApiUtil = {
       }
     });
   }
-}
+};
